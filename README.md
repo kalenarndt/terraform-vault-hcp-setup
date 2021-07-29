@@ -1,6 +1,6 @@
 # Terraform Vault HCP Setup
 
-This Terraform code will create an HCP Vault cluster along with the required vpcs, security groups, subnets, internet gateways, assocations, peering, and vault cluster. This does not expose Vault to the internet, just the peered VPC.
+This Terraform code will create an HCP Vault cluster along with the required vpcs, security groups, subnets, internet gateways, assocations, peering, and vault cluster. 
 
 ---
 ## Required Credentials
@@ -20,7 +20,7 @@ This Terraform code will create an HCP Vault cluster along with the required vpc
 **AWS Credentials**
 - Export these credentials as environment variables or add them to the settings.tf file
 
-T
+
 ---
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
