@@ -1,3 +1,27 @@
+# Terraform Vault HCP Setup
+
+This Terraform code will create an HCP Vault cluster along with the required vpcs, security groups, subnets, internet gateways, assocations, peering, and vault cluster. This does not expose Vault to the internet, just the peered VPC.
+
+---
+## Required Credentials
+
+
+**HCP Vault Credentials**
+
+1. Login at https://portal.cloud.hashicorp.com/sign-in
+2. Go to IAM
+3. Go to Service Principals
+4. Create a Service Principal with the Contributor Role
+5. Click on the User
+6. Click Create Service Principal Key
+7. Add client id and client secret to terraform.tfvars OR [export them as environment variables](https://registry.terraform.io/providers/hashicorp/hcp/latest/docs/guides/auth#two-options-to-configure-the-provider)
+
+
+**AWS Credentials**
+- Export these credentials as environment variables or add them to the settings.tf file
+
+T
+---
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

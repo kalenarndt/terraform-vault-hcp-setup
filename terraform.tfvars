@@ -1,3 +1,5 @@
 aws_product_tag     = "vault"
 aws_environment_tag = "HCP"
 aws_owner_tag       = "Kalen"
+hcp_client_secret   = "myclientsecret"
+hcp_client_id       = "myclientid" 
