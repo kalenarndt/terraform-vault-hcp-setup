@@ -75,7 +75,6 @@ resource "aws_security_group_rule" "aws_vault_sg_rules" {
   security_group_id = aws_security_group.aws_vault_sg.id
 }
 
-
 // creates the aws route table for the VPC 
 resource "aws_route_table" "aws_vault_route_table" {
   vpc_id = aws_vpc.aws_vpc_hvn.id
