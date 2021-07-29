@@ -2,7 +2,7 @@
 resource "aws_vpc" "aws_vpc_hvn" {
   cidr_block = var.aws_cidr_block
   tags = {
-    "Name" = var.aws_vpc_hvn_name
+    Name = var.aws_vpc_hvn_name
   }
 }
 
@@ -21,9 +21,9 @@ resource "hcp_hvn_route" "hvn_peer_route" {
 
 // configures peering between hvn and aws
 resource "hcp_aws_network_peering" "hvn_aws_peer" {
-  hvn_id = hcp_hvn.hcp_vault_hvn.hvn_id
-  peering_id = var.hvn_peering_id
-  peer_vpc_id = aws_vpc.aws_vpc_hvn.id
+  hvn_id          = hcp_hvn.hcp_vault_hvn.hvn_id
+  peering_id      = var.hvn_peering_id
+  peer_vpc_id     = aws_vpc.aws_vpc_hvn.id
   peer_account_id = aws_vpc.aws_vpc_hvn.owner_id
   peer_vpc_region = data.aws_arn.aws_vpc_peer.region
 }
@@ -81,7 +81,7 @@ resource "aws_route_table" "aws_vault_route_table" {
   vpc_id = aws_vpc.aws_vpc_hvn.id
 
   route {
-    cidr_block = hcp_hvn.hcp_vault_hvn.cidr_block
+    cidr_block                = hcp_hvn.hcp_vault_hvn.cidr_block
     vpc_peering_connection_id = hcp_aws_network_peering.hvn_aws_peer.provider_peering_id
   }
 
@@ -97,8 +97,8 @@ resource "aws_route_table" "aws_vault_route_table" {
 
 // creates an aws subnet for ec2 workloads in aws
 resource "aws_subnet" "aws_hcp_jump_subnet" {
-  vpc_id            = aws_vpc.aws_vpc_hvn.id
-  cidr_block        = var.aws_hcp_ec2_subnet
+  vpc_id     = aws_vpc.aws_vpc_hvn.id
+  cidr_block = var.aws_hcp_ec2_subnet
 
   tags = {
     Name = var.aws_hcp_jump_subnet_name
@@ -107,7 +107,7 @@ resource "aws_subnet" "aws_hcp_jump_subnet" {
 
 // associates the aws route table with the subnet to allow for access to HCP Vault and the internet
 resource "aws_route_table_association" "aws_hcp_jump_subnet_association" {
-  subnet_id = aws_subnet.aws_hcp_jump_subnet.id
+  subnet_id      = aws_subnet.aws_hcp_jump_subnet.id
   route_table_id = aws_route_table.aws_vault_route_table.id
 }
 

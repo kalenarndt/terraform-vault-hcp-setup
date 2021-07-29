@@ -98,47 +98,47 @@ variable "aws_vpc_hvn_name" {
 
 variable "aws_vpc_peering_name" {
   description = "Name of the Peering Connection that will be created. Specified as a tag"
-  type = string
-  default = "hcp-vault-pc"
+  type        = string
+  default     = "hcp-vault-pc"
 }
 
 variable "aws_route_table_name" {
   description = "Name of the AWS Route Table that will be created. Specified as a tag"
-  type = string
-  default = "hcp-vault-rt"
+  type        = string
+  default     = "hcp-vault-rt"
 }
 
 variable "aws_hcp_ec2_subnet" {
   description = "CIDR block for EC2 workloads. Should be allocated from the VPC subnet range."
-  type = string
-  default = "10.0.1.0/24"
+  type        = string
+  default     = "10.0.1.0/24"
 }
 
 variable "aws_hcp_jump_subnet_name" {
   description = "Name of the Subnet that will be created in the VPC. Specified as a tag"
-  type = string
-  default = "hcp-vault-subnet"
+  type        = string
+  default     = "hcp-vault-subnet"
 }
 
 variable "aws_hcp_jump_igw_name" {
   description = "Name of the Internet Gateway that will be created and associated with the VPC. Specified as a tag"
-  type = string
-  default = "hcp-vault-jump-igw"
+  type        = string
+  default     = "hcp-vault-jump-igw"
 }
 
 variable "aws_owner_tag" {
   description = "Tag that will be appled to all AWS resources."
-  type = string
+  type        = string
 }
 
 variable "aws_product_tag" {
   description = "Tag that will be applied to all AWS resources"
-  type = string
-  default = "vault"
+  type        = string
+  default     = "vault"
 }
 
 variable "aws_environment_tag" {
   description = "Tag that will be applied to all AWS resources"
-  type = string
-  default = "HCP"
+  type        = string
+  default     = "HCP"
 }
