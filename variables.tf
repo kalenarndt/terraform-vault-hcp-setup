@@ -70,6 +70,10 @@ variable "hcp_tier" {
   description = "Tier to provision in HCP Vault - dev, standard_small, standard_medium, standard_large"
   type        = string
   default     = "dev"
+  validation {
+    condition     = var.hcp_tier != "dev" || var.hcp_tier != "standard_small" || var.hcp_tier != "standard_medium" || var.hcp_tier != "standard_large"
+    error_message = "The variable hcp_tier must be \"dev\", \"standard_small\", \"standard_medium\", or \"standard_large\"."
+  }
 }
 
 variable "aws_vault_sg_prefix" {
