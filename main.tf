@@ -1,9 +1,29 @@
 // create the aws vpc
 resource "aws_vpc" "aws_vpc_hvn" {
-  cidr_block = var.aws_cidr_block
+  cidr_block = var.aws_vpc_cidr_block
   tags = {
     Name = var.aws_vpc_hvn_name
   }
+}
+
+data "aws_availability_zones" "aws_az_list" {
+  state = "available"
+  filter {
+    name   = "opt-in-status"
+    values = ["opt-in-not-required"]
+  }
+}
+
+
+module "aws_vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "3.2.0"
+
+  name            = var.aws_vpc_hvn_name
+  cidr            = var.aws_vpc_cidr_block
+  azs             = data.aws_availability_zones.aws_az_list.names
+  private_subnets = [var.var.aws_hcp_bastion_subnet]
+
 }
 
 // reads the data from the aws vpc for HCP
@@ -85,7 +105,7 @@ resource "aws_route_table" "aws_vault_route_table" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.aws_hcp_jump_igw.id
+    gateway_id = aws_internet_gateway.aws_hcp_bastion_igw.id
   }
 
   tags = {
@@ -94,25 +114,47 @@ resource "aws_route_table" "aws_vault_route_table" {
 }
 
 // creates an aws subnet for ec2 workloads in aws
-resource "aws_subnet" "aws_hcp_jump_subnet" {
+resource "aws_subnet" "aws_hcp_bastion_subnet" {
   vpc_id     = aws_vpc.aws_vpc_hvn.id
   cidr_block = var.aws_hcp_ec2_subnet
 
   tags = {
-    Name = var.aws_hcp_jump_subnet_name
+    Name = var.aws_hcp_bastion_subnet_name
   }
 }
 
 // associates the aws route table with the subnet to allow for access to HCP Vault and the internet
-resource "aws_route_table_association" "aws_hcp_jump_subnet_association" {
-  subnet_id      = aws_subnet.aws_hcp_jump_subnet.id
+resource "aws_route_table_association" "aws_hcp_bastion_subnet_association" {
+  subnet_id      = aws_subnet.aws_hcp_bastion_subnet.id
   route_table_id = aws_route_table.aws_vault_route_table.id
 }
 
 // creates an aws internet gateway and associates it with the vpc
-resource "aws_internet_gateway" "aws_hcp_jump_igw" {
+resource "aws_internet_gateway" "aws_hcp_bastion_igw" {
   vpc_id = aws_vpc.aws_vpc_hvn.id
   tags = {
-    Name = var.aws_hcp_jump_igw_name
+    Name = var.aws_hcp_bastion_igw_name
+  }
+}
+
+
+data "aws_ami" "aws_hcp_bastion_ami" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm*"]
+  }
+}
+
+resource "aws_instance" "aws_hcp_bastion_ec2" {
+  ami                         = data.aws_ami.aws_hcp_bastion_ami.id
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.aws_hcp_bastion_subnet.id
+  associate_public_ip_address = true
+  vpc_security_group_ids      = [aws_security_group.aws_vault_sg.id]
+  tags = {
+    Name = var.aws_hcp_bastion_ec2_name
   }
 }

@@ -1,45 +1,3 @@
-variable "hvn_id" {
-  description = "The ID of the HCP HVN."
-  type        = string
-  default     = "hcp-vault-hvn"
-}
-
-variable "hcp_cluster_id" {
-  description = "The ID of the HCP Vault cluster."
-  type        = string
-  default     = "hcp-vault-cluster"
-}
-
-variable "hvn_peering_id" {
-  description = "The ID of the HCP peering connection."
-  type        = string
-  default     = "hcp-hvn-peering"
-}
-
-variable "hvn_route_id" {
-  description = "The ID of the HCP HVN route."
-  type        = string
-  default     = "hcp-hvn-route"
-}
-
-variable "region" {
-  description = "The region of the HCP HVN and Vault cluster."
-  type        = string
-  default     = "us-west-2"
-}
-
-variable "cloud_provider" {
-  description = "The cloud provider of the HCP HVN and Vault cluster."
-  type        = string
-  default     = "aws"
-}
-
-variable "hcp_public_endpoint" {
-  description = "Exposes the cluster to the internet. Defaults to false"
-  type        = bool
-  default     = false
-}
-
 variable "hcp_client_id" {
   description = "Client ID used to authenticate with HCP"
   type        = string
@@ -54,26 +12,10 @@ variable "hcp_client_secret" {
   default     = null
 }
 
-variable "aws_cidr_block" {
+variable "aws_vpc_cidr_block" {
   description = "CIDR block for the AWS VPC"
   type        = string
   default     = "10.0.0.0/16"
-}
-
-variable "hcp_cidr_block" {
-  description = "CIDR block for the HVN VPC"
-  type        = string
-  default     = "172.25.16.0/20"
-}
-
-variable "hcp_tier" {
-  description = "Tier to provision in HCP Vault - dev, standard_small, standard_medium, standard_large"
-  type        = string
-  default     = "dev"
-  validation {
-    condition     = var.hcp_tier != "dev" || var.hcp_tier != "standard_small" || var.hcp_tier != "standard_medium" || var.hcp_tier != "standard_large"
-    error_message = "The variable hcp_tier must be \"dev\", \"standard_small\", \"standard_medium\", or \"standard_large\"."
-  }
 }
 
 variable "aws_vault_sg_prefix" {
@@ -112,22 +54,22 @@ variable "aws_route_table_name" {
   default     = "hcp-vault-rt"
 }
 
-variable "aws_hcp_ec2_subnet" {
+variable "aws_hcp_bastion_subnet" {
   description = "CIDR block for EC2 workloads. Should be allocated from the VPC subnet range."
   type        = string
   default     = "10.0.1.0/24"
 }
 
-variable "aws_hcp_jump_subnet_name" {
+variable "aws_hcp_bastion_subnet_name" {
   description = "Name of the Subnet that will be created in the VPC. Specified as a tag"
   type        = string
-  default     = "hcp-vault-subnet"
+  default     = "hcp-vault-bastion-subnet"
 }
 
-variable "aws_hcp_jump_igw_name" {
+variable "aws_hcp_bastion_igw_name" {
   description = "Name of the Internet Gateway that will be created and associated with the VPC. Specified as a tag"
   type        = string
-  default     = "hcp-vault-jump-igw"
+  default     = "hcp-vault-bastion-igw"
 }
 
 variable "aws_owner_tag" {
@@ -145,4 +87,10 @@ variable "aws_environment_tag" {
   description = "Tag that will be applied to all AWS resources"
   type        = string
   default     = "HCP"
+}
+
+variable "aws_hcp_bastion_ec2_name" {
+  description = "Tag that will be appled to the EC2 bastion host. Specified as a tag"
+  type        = string
+  default     = "hcp-vault-bastion-ec2"
 }

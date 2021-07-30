@@ -20,6 +20,11 @@ This Terraform code will create an HCP Vault cluster along with the required vpc
 **AWS Credentials**
 - Export these credentials as environment variables or add them to the settings.tf file
 
+### TODO
+
+- [] Refactor HCP calls into a module
+- [] Change AWS networking calls to use the VPC module
+- [] Add a bastion host
 
 ---
 <!-- BEGIN_TF_DOCS -->
