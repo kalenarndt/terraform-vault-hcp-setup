@@ -54,7 +54,6 @@ resource "hcp_vault_cluster" "vault_cluster" {
   public_endpoint = var.hcp_public_endpoint
 }
 
-
 // creates a security group in aws for vault access
 resource "aws_security_group" "aws_vault_sg" {
   description = var.aws_vault_sg_desc
@@ -117,6 +116,3 @@ resource "aws_internet_gateway" "aws_hcp_jump_igw" {
     Name = var.aws_hcp_jump_igw_name
   }
 }
-
-
-
