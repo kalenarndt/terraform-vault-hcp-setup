@@ -12,6 +12,14 @@ variable "hcp_client_secret" {
   default     = null
 }
 
+## ====================
+
+variable "region" {
+  description = "The region of the HCP HVN and Vault cluster."
+  type        = string
+  default     = "us-west-2"
+}
+
 variable "aws_vpc_cidr_block" {
   description = "CIDR block for the AWS VPC"
   type        = string

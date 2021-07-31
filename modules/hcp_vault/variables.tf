@@ -1,19 +1,19 @@
-variable "aws_peer_vpc_id" {
+variable "vpc_id" {
   description = "Peer ID from the AWS peering VPC"
   type        = string
 }
 
-variable "aws_peer_account_id" {
+variable "vpc_owner_id" {
   description = "Peer account ID from AWS"
   type        = string
 }
 
-variable "aws_vpc_cidr_block" {
+variable "vpc_cidr" {
   description = "Destination CIDR block of the AWS VPC"
   type        = string
 }
 
-variable "aws_vpc_peer_region" {
+variable "vpc_region" {
   description = "Region where the AWS VPC was created"
   type        = string
 }
