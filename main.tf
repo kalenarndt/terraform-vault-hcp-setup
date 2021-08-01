@@ -28,11 +28,6 @@ module "hcp_vault" {
 
 
 
-
-
-
-
-
 # // creates a security group in aws for vault access
 # resource "aws_security_group" "aws_vault_sg" {
 #   description = var.aws_vault_sg_desc
