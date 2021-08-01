@@ -1,11 +1,3 @@
-# // create the aws vpc
-# resource "aws_vpc" "aws_vpc_hvn" {
-#   cidr_block = var.aws_vpc_cidr_block
-#   tags = {
-#     Name = var.aws_vpc_hvn_name
-#   }
-# }
-
 data "aws_availability_zones" "aws_az_list" {
   state = "available"
   filter {
@@ -34,15 +26,6 @@ module "hcp_vault" {
   vpc_cidr     = module.aws_vpc.vpc_cidr_block
 }
 
-
-
-# // reads the data from the aws vpc for HCP
-# data "aws_arn" "aws_vpc_peer" {
-#   arn = aws_vpc.aws_vpc_hvn.arn
-# }
-
-
-# // configures peering between hvn and aws
 
 
 
