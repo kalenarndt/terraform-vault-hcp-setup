@@ -102,3 +102,9 @@ variable "aws_hcp_bastion_ec2_name" {
   type        = string
   default     = "hcp-vault-bastion-ec2"
 }
+
+variable "vpc_peering" {
+  description = "Flag to enable vpc peering with HCP and AWS"
+  type        = bool
+  default     = true
+}

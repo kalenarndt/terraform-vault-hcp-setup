@@ -6,7 +6,6 @@ data "aws_availability_zones" "aws_az_list" {
   }
 }
 
-
 module "aws_vpc" {
   source               = "terraform-aws-modules/vpc/aws"
   version              = "3.2.0"
@@ -18,12 +17,13 @@ module "aws_vpc" {
 }
 
 module "hcp_vault" {
-  source       = "./modules/hcp_vault"
-  hcp_tier     = "dev"
-  vpc_region   = var.region
-  vpc_id       = module.aws_vpc.vpc_id
-  vpc_owner_id = module.aws_vpc.vpc_owner_id
-  vpc_cidr     = module.aws_vpc.vpc_cidr_block
+  source         = "./modules/hcp_vault"
+  hcp_vault_tier = "dev"
+  vpc_region     = var.region
+  vpc_id         = module.aws_vpc.vpc_id
+  vpc_owner_id   = module.aws_vpc.vpc_owner_id
+  vpc_cidr       = module.aws_vpc.vpc_cidr_block
+  vpc_peering    = true
 }
 
 
