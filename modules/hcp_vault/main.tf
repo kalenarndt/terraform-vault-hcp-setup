@@ -38,6 +38,13 @@ resource "hcp_vault_cluster" "vault_cluster" {
   min_vault_version = var.min_vault_version
 }
 
+// generates a vault admin token for the cluster
+resource "hcp_vault_cluster_admin_token" "vault_token" {
+  count = var.generate_vault_token ? 1 : 0
+
+  cluster_id = hcp_vault_cluster.vault_cluster[0].cluster_id
+}
+
 // accept the peering request between hvn and aws
 resource "aws_vpc_peering_connection_accepter" "hvn_aws_vpc_accept" {
   count = var.vpc_peering ? 1 : 0
@@ -96,4 +103,19 @@ resource "hcp_consul_cluster" "consul_cluster" {
   datacenter         = var.consul_datacenter != null ? var.consul_datacenter : var.consul_cluster_name
   min_consul_version = var.min_consul_version
   connect_enabled    = var.connect_enabled
+}
+
+// generates a consul root token for the cluster
+resource "hcp_consul_cluster_root_token" "consul_token" {
+  count = var.generate_consul_token ? 1 : 0
+
+  cluster_id = hcp_consul_cluster.consul_cluster[0].cluster_id
+}
+
+
+// outputs the tokens in clear text if variable is set to true
+locals {
+  output_consul_k8s_token_nonsensitive = var.output_consul_token == true ? nonsensitive(hcp_consul_cluster_root_token.consul_token[0].kubernetes_secret) : null
+  output_consul_token_nonsensitive     = var.output_consul_token == true ? nonsensitive(hcp_consul_cluster_root_token.consul_token[0].secret_id) : null
+  output_vault_token_nonsensitive      = var.output_vault_token == true ? nonsensitive(hcp_vault_cluster_admin_token.vault_token[0].token) : null
 }

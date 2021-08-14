@@ -10,6 +10,17 @@ variable "create_consul_cluster" {
   default     = false
 }
 
+variable "generate_consul_token" {
+  description = "Flag to generate HCP Consul root token"
+  type        = bool
+  default     = false
+}
+
+variable "generate_vault_token" {
+  description = "Flag to generate HCP Vault admin token"
+  type        = bool
+  default     = false
+}
 
 variable "vault_tier" {
   description = "Tier to provision in HCP Vault - dev, standard_small, standard_medium, standard_large"
@@ -37,6 +48,12 @@ variable "min_vault_version" {
   description = "Minimum Vault version to use when creating the cluster. If null, defaults to HCP recommended version"
   type        = string
   default     = null
+}
+
+variable "output_vault_token" {
+  description = "Flag to output the generated Vault token as a non-sensitive object in the console"
+  type        = bool
+  default     = false
 }
 
 ##### Consul
@@ -88,6 +105,12 @@ variable "consul_datacenter" {
   description = "The Consul datacenter name. If set to null the datacenter will be set to the Consul cluster name. Defaults to null"
   type        = string
   default     = null
+}
+
+variable "output_consul_token" {
+  description = "Flag to output the generated Consul token as a non-sensitive object in the console"
+  type        = bool
+  default     = false
 }
 
 #### End Consul ####
@@ -157,23 +180,17 @@ variable "hvn_id" {
   default     = "hcp-vault-hvn"
 }
 
-
-
-
 variable "hvn_peering_id" {
   description = "The ID of the HCP peering connection."
   type        = string
   default     = "hcp-hvn-peering"
 }
 
-
-
 variable "transit_gw_attachment_id" {
   description = "Name of the transit gateway attachment in HVN"
   type        = string
   default     = "hcp-hvn-transit-gw"
 }
-
 
 variable "transit_gw_id" {
   description = "ID of the transit gateway that exists in AWS that HCP will attach to"

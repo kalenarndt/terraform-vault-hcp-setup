@@ -17,15 +17,21 @@ module "aws_vpc" {
 }
 
 module "hcp_vault" {
-  source               = "./modules/hcp_vault"
-  vault_tier           = "dev"
-  vpc_region           = var.region
-  vpc_id               = module.aws_vpc.vpc_id
-  vpc_owner_id         = module.aws_vpc.vpc_owner_id
-  vpc_cidr             = module.aws_vpc.vpc_cidr_block
-  vpc_peering          = true
-  create_vault_cluster = true
+  source                = "./modules/hcp_vault"
+  vault_tier            = "dev"
+  vpc_region            = var.region
+  vpc_id                = module.aws_vpc.vpc_id
+  vpc_owner_id          = module.aws_vpc.vpc_owner_id
+  vpc_cidr              = module.aws_vpc.vpc_cidr_block
+  vpc_peering           = true
+  create_vault_cluster  = true
+  create_consul_cluster = true
+  generate_consul_token = true
+  generate_vault_token  = true
+  output_consul_token   = true
+  output_vault_token    = true
 }
+
 
 # // creates a security group in aws for vault access
 # resource "aws_security_group" "aws_vault_sg" {
