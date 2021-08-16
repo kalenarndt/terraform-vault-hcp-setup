@@ -51,7 +51,7 @@ variable "min_vault_version" {
 }
 
 variable "output_vault_token" {
-  description = "Flag to output the generated Vault token as a non-sensitive object in the console"
+  description = "Flag to output the generated Vault token as a non-sensitive object. Use with caution"
   type        = bool
   default     = false
 }
@@ -108,7 +108,7 @@ variable "consul_datacenter" {
 }
 
 variable "output_consul_token" {
-  description = "Flag to output the generated Consul token as a non-sensitive object in the console"
+  description = "Flag to output the generated Consul token as a non-sensitive object. Use with caution"
   type        = bool
   default     = false
 }
@@ -150,7 +150,7 @@ variable "vpc_region" {
   type        = string
 }
 
-variable "hcp_cidr_block" {
+variable "hvn_cidr_block" {
   description = "CIDR block for the HVN VPC"
   type        = string
   default     = "172.25.16.0/20"
@@ -169,7 +169,7 @@ variable "region" {
 }
 
 variable "cloud_provider" {
-  description = "The cloud provider of the HCP HVN and Vault cluster."
+  description = "The cloud provider of the HCP HVN, HCP Vault, or HCP Consul cluster."
   type        = string
   default     = "aws"
 }

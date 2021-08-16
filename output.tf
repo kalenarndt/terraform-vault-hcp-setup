@@ -22,7 +22,6 @@ output "vault_token" {
   value = module.hcp_vault.vault_token
 }
 
-
 output "consul_private_endpoint_url" {
   value = module.hcp_vault.consul_private_endpoint_url
 }

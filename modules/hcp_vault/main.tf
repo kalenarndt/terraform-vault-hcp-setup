@@ -24,7 +24,7 @@ resource "hcp_hvn" "hcp_hvn" {
   hvn_id         = var.hvn_id
   cloud_provider = var.cloud_provider
   region         = var.region
-  cidr_block     = var.hcp_cidr_block
+  cidr_block     = var.hvn_cidr_block
 }
 
 // creates the vault cluster on the hvn network resource

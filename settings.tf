@@ -2,9 +2,10 @@ provider "aws" {
   region = var.region
   default_tags {
     tags = {
-      Environment = var.aws_environment_tag
-      Product     = var.aws_product_tag
-      Owner       = var.aws_owner_tag
+      Environment = var.aws_tag_environment
+      Owner       = var.aws_tag_owner
+      Name        = var.aws_tag_name
+      TTL         = var.aws_tag_ttl
     }
   }
 }

@@ -80,23 +80,6 @@ variable "aws_hcp_bastion_igw_name" {
   default     = "hcp-vault-bastion-igw"
 }
 
-variable "aws_owner_tag" {
-  description = "Tag that will be appled to all AWS resources."
-  type        = string
-}
-
-variable "aws_product_tag" {
-  description = "Tag that will be applied to all AWS resources"
-  type        = string
-  default     = "vault"
-}
-
-variable "aws_environment_tag" {
-  description = "Tag that will be applied to all AWS resources"
-  type        = string
-  default     = "HCP"
-}
-
 variable "aws_hcp_bastion_ec2_name" {
   description = "Tag that will be appled to the EC2 bastion host. Specified as a tag"
   type        = string
@@ -107,4 +90,27 @@ variable "vpc_peering" {
   description = "Flag to enable vpc peering with HCP and AWS"
   type        = bool
   default     = true
+}
+
+variable "aws_tag_name" {
+  description = "Your name - This will be added to all the AWS resources that will be provisioned as a tag"
+  type        = string
+  default     = ""
+}
+
+variable "aws_tag_ttl" {
+  description = "TTL of the resources that will be provisioned for this demo. Specified in hours."
+  type        = number
+  default     = 24
+}
+
+variable "aws_tag_environment" {
+  description = "Tag that will be applied to all AWS resources"
+  type        = string
+  default     = "HCP"
+}
+
+variable "aws_tag_owner" {
+  description = "Your email - This tag that will be appled to all AWS resources."
+  type        = string
 }
