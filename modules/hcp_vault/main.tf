@@ -25,10 +25,10 @@ resource "hcp_aws_network_peering" "hvn_aws_peer" {
 resource "hcp_hvn" "hcp_hvn" {
   count = var.single_hvn && var.create_vault_cluster || var.single_hvn && var.create_vault_cluster || var.single_hvn && var.create_consul_cluster && var.create_vault_cluster ? 1 : 0
 
-  hvn_id = var.hvn_id
+  hvn_id         = var.hvn_id
   cloud_provider = var.cloud_provider
-  region = var.region
-  cidr_block = var.hvn_cidr_block
+  region         = var.region
+  cidr_block     = var.hvn_cidr_block
 }
 
 // accept the peering request between hvn and aws
@@ -47,7 +47,7 @@ resource "aws_vpc_peering_connection_accepter" "hvn_aws_vpc_accept" {
 
 // creates the hvn consul network resource
 resource "hcp_hvn" "hcp_vault_hvn" {
-  count          = var.create_vault_cluster && var.single_hvn == false ? 1 : 0
+  count = var.create_vault_cluster && var.single_hvn == false ? 1 : 0
 
   hvn_id         = var.hvn_vault_id
   cloud_provider = var.cloud_provider
@@ -62,7 +62,7 @@ resource "hcp_aws_network_peering" "hvn_vault_aws_peer" {
 
   hvn_id          = hcp_hvn.hcp_vault_hvn[0].hvn_id
   peering_id      = var.hvn_vault_peering_id
-  peer_vpc_id     = var.vpc_vault_id != "" ? var.vpc_vault_id : var.vpc_id 
+  peer_vpc_id     = var.vpc_vault_id != "" ? var.vpc_vault_id : var.vpc_id
   peer_account_id = var.vpc_owner_id
   peer_vpc_region = var.vpc_region
 }
@@ -113,7 +113,7 @@ resource "hcp_aws_network_peering" "hvn_consul_aws_peer" {
 
 // creates the hvn consul network resource
 resource "hcp_hvn" "hcp_consul_hvn" {
-  count          = var.create_consul_cluster && var.single_hvn == false ? 1 : 0
+  count = var.create_consul_cluster && var.single_hvn == false ? 1 : 0
 
   hvn_id         = var.hvn_consul_id
   cloud_provider = var.cloud_provider
@@ -148,23 +148,23 @@ resource "hcp_vault_cluster" "vault_cluster" {
 resource "hcp_vault_cluster_admin_token" "vault_token" {
   count = var.create_vault_cluster && var.generate_vault_token || var.generate_vault_token ? 1 : 0
 
-  cluster_id = concat(hcp_vault_cluster.vault_cluster.*.cluster_id, [""])[0] != "" ? concat(hcp_vault_cluster.vault_cluster.*.cluster_id, [""])[0]  : var.vault_cluster_name
+  cluster_id = concat(hcp_vault_cluster.vault_cluster.*.cluster_id, [""])[0] != "" ? concat(hcp_vault_cluster.vault_cluster.*.cluster_id, [""])[0] : var.vault_cluster_name
 }
 
 // creates the hcp consul cluster
 resource "hcp_consul_cluster" "consul_cluster" {
   count = var.create_consul_cluster ? 1 : 0
 
-  cluster_id         = var.consul_cluster_name
-  hvn_id             = var.single_hvn == true ? hcp_hvn.hcp_hvn[0].hvn_id : hcp_hvn.hcp_consul_hvn[0].hvn_id
-  tier               = var.consul_tier
-  size               = var.consul_size
-  public_endpoint    = var.consul_public_endpoint
-  datacenter         = var.consul_datacenter != null ? var.consul_datacenter : var.consul_cluster_name
-  min_consul_version = var.min_consul_version
-  connect_enabled    = var.connect_enabled
+  cluster_id              = var.consul_cluster_name
+  hvn_id                  = var.single_hvn == true ? hcp_hvn.hcp_hvn[0].hvn_id : hcp_hvn.hcp_consul_hvn[0].hvn_id
+  tier                    = var.consul_tier
+  size                    = var.consul_size
+  public_endpoint         = var.consul_public_endpoint
+  datacenter              = var.consul_datacenter != null ? var.consul_datacenter : var.consul_cluster_name
+  min_consul_version      = var.min_consul_version
+  connect_enabled         = var.connect_enabled
   auto_hvn_to_hvn_peering = var.hvn_to_hvn_peering
-  primary_link = var.federation != false ? data.hcp_consul_cluster.primary[0].cluster_id : null
+  primary_link            = var.federation != false ? data.hcp_consul_cluster.primary[0].cluster_id : null
 }
 
 // generates a consul root token for the cluster
@@ -196,15 +196,15 @@ resource "hcp_hvn_route" "hvn_tgw_route" {
 // retrieves the primary link for the federation peering.
 data "hcp_consul_cluster" "primary" {
   count = var.federation ? 1 : 0
-  
+
   cluster_id = var.primary_consul_cluster_name
 }
 
 // snapshots the consul cluster
-resource "hcp_consul_snapshot" "snapshot"{
+resource "hcp_consul_snapshot" "snapshot" {
   count = var.snapshot_name != "" ? 1 : 0
 
-  cluster_id = concat(hcp_consul_cluster.consul_cluster.*.cluster_id, [""])[0] != "" ? concat(hcp_consul_cluster.consul_cluster.*.cluster_id, [""])[0]: var.consul_cluster_name
+  cluster_id    = concat(hcp_consul_cluster.consul_cluster.*.cluster_id, [""])[0] != "" ? concat(hcp_consul_cluster.consul_cluster.*.cluster_id, [""])[0] : var.consul_cluster_name
   snapshot_name = var.snapshot_name
 }
 

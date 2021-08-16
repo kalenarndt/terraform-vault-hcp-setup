@@ -58,8 +58,8 @@ variable "output_vault_token" {
 
 variable "vpc_vault_id" {
   description = "Peer ID of the VPC in AWS that the HVN (Vault) will peer with. If not set, module peers with vpc_id"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "hvn_vault_id" {
@@ -139,8 +139,8 @@ variable "consul_datacenter" {
 
 variable "hvn_to_hvn_peering" {
   description = "Enables automatic HVN to HVN peering when creating a secondary cluster in Consul Federation."
-  type = bool
-  default = true
+  type        = bool
+  default     = true
 }
 
 variable "output_consul_token" {
@@ -151,32 +151,32 @@ variable "output_consul_token" {
 
 variable "snapshot_name" {
   description = "Name of the Consul Snapshot that will be created"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "auto_hvn_to_hvn_peering" {
   description = "Flag to enable auto hvn to hvn peering. Defaults to false"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 variable "federation" {
   description = "Flag to enable Consul Federation. Defaults to false"
-  type = bool
-  default = "false"
+  type        = bool
+  default     = "false"
 }
 
 variable "primary_consul_cluster_name" {
   description = "Primary Consul cluster name (id) that secondary clusters will be federating with."
-  type = string
-  default = null
+  type        = string
+  default     = null
 }
 
 variable "vpc_consul_id" {
   description = "Peer ID of the VPC in AWS that the HVN (Consul) will peer with. If not set, module peers with vpc_id"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "hvn_consul_route_id" {
@@ -213,8 +213,8 @@ variable "vpc_peering" {
 
 variable "single_hvn" {
   description = "Flag that creates a single HVN that is shared between Vault and Consul. Defaults to false"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 variable "transit_gw" {
