@@ -25,7 +25,7 @@ variable "generate_vault_token" {
 variable "vault_tier" {
   description = "Tier to provision in HCP Vault - dev, standard_small, standard_medium, standard_large"
   type        = string
-  default     = "dev"
+  default     = ""
   validation {
     condition     = var.vault_tier != "dev" || var.vault_tier != "standard_small" || var.vault_tier != "standard_medium" || var.vault_tier != "standard_large"
     error_message = "The variable vault_tier must be \"dev\", \"standard_small\", \"standard_medium\", or \"standard_large\"."
@@ -54,6 +54,36 @@ variable "output_vault_token" {
   description = "Flag to output the generated Vault token as a non-sensitive object. Use with caution"
   type        = bool
   default     = false
+}
+
+variable "vpc_vault_id" {
+  description = "Peer ID of the VPC in AWS that the HVN (Vault) will peer with. If not set, module peers with vpc_id"
+  type = string
+  default = ""
+}
+
+variable "hvn_vault_id" {
+  description = "The ID of the HCP Vault HVN."
+  type        = string
+  default     = "hcp-vault-hvn"
+}
+
+variable "hvn_vault_cidr_block" {
+  description = "CIDR block for the HVN Vault VPC"
+  type        = string
+  default     = "172.25.16.0/24"
+}
+
+variable "hvn_vault_route_id" {
+  description = "The ID of the HCP Vault HVN route."
+  type        = string
+  default     = "hcp-vault-hvn-route"
+}
+
+variable "hvn_vault_peering_id" {
+  description = "The Peering ID of the HCP Vault HVN."
+  type        = string
+  default     = "hcp-vault-hvn-peer"
 }
 
 ##### Consul
@@ -107,10 +137,70 @@ variable "consul_datacenter" {
   default     = null
 }
 
+variable "hvn_to_hvn_peering" {
+  description = "Enables automatic HVN to HVN peering when creating a secondary cluster in Consul Federation."
+  type = bool
+  default = true
+}
+
 variable "output_consul_token" {
   description = "Flag to output the generated Consul token as a non-sensitive object. Use with caution"
   type        = bool
   default     = false
+}
+
+variable "snapshot_name" {
+  description = "Name of the Consul Snapshot that will be created"
+  type = string
+  default = ""
+}
+
+variable "auto_hvn_to_hvn_peering" {
+  description = "Flag to enable auto hvn to hvn peering. Defaults to false"
+  type = bool
+  default = false
+}
+
+variable "federation" {
+  description = "Flag to enable Consul Federation. Defaults to false"
+  type = bool
+  default = "false"
+}
+
+variable "primary_consul_cluster_name" {
+  description = "Primary Consul cluster name (id) that secondary clusters will be federating with."
+  type = string
+  default = null
+}
+
+variable "vpc_consul_id" {
+  description = "Peer ID of the VPC in AWS that the HVN (Consul) will peer with. If not set, module peers with vpc_id"
+  type = string
+  default = ""
+}
+
+variable "hvn_consul_route_id" {
+  description = "The ID of the HCP Consul HVN route."
+  type        = string
+  default     = "hcp-consul-hvn-route"
+}
+
+variable "hvn_consul_cidr_block" {
+  description = "CIDR block for the HVN Consul VPC"
+  type        = string
+  default     = "172.25.17.0/24"
+}
+
+variable "hvn_consul_id" {
+  description = "The ID of the HCP Consul HVN."
+  type        = string
+  default     = "hcp-consul-hvn"
+}
+
+variable "hvn_consul_peering_id" {
+  description = "The Peering ID of the HCP Consul HVN."
+  type        = string
+  default     = "hcp-consul-hvn-peer"
 }
 
 #### End Consul ####
@@ -119,6 +209,12 @@ variable "vpc_peering" {
   description = "Flag to enable vpc peering with HCP and AWS"
   type        = bool
   default     = true
+}
+
+variable "single_hvn" {
+  description = "Flag that creates a single HVN that is shared between Vault and Consul. Defaults to false"
+  type = bool
+  default = false
 }
 
 variable "transit_gw" {
@@ -148,6 +244,7 @@ variable "vpc_cidr" {
 variable "vpc_region" {
   description = "Region where the AWS VPC was created"
   type        = string
+  default     = ""
 }
 
 variable "hvn_cidr_block" {
@@ -177,7 +274,7 @@ variable "cloud_provider" {
 variable "hvn_id" {
   description = "The ID of the HCP HVN."
   type        = string
-  default     = "hcp-vault-hvn"
+  default     = "hcp-hvn"
 }
 
 variable "hvn_peering_id" {
@@ -203,5 +300,15 @@ variable "resource_share_arn" {
   type        = string
   default     = ""
 }
+
+
+######################################## TESTING VARIABLES
+
+
+
+
+
+
+
 
 

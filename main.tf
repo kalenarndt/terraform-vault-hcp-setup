@@ -19,6 +19,8 @@ module "aws_vpc" {
 module "hcp_vault" {
   source                = "./modules/hcp_vault"
   vault_tier            = "dev"
+  consul_tier           = "development"
+  consul_size           = "x_small"
   vpc_region            = var.region
   vpc_id                = module.aws_vpc.vpc_id
   vpc_owner_id          = module.aws_vpc.vpc_owner_id
@@ -30,7 +32,16 @@ module "hcp_vault" {
   generate_vault_token  = true
   output_consul_token   = true
   output_vault_token    = true
+  single_hvn            = false
 }
+
+# module "hcp_vault_tokens" {
+#   source                = "./modules/hcp_vault"
+#   generate_consul_token = true
+#   generate_vault_token  = true
+#   output_consul_token   = true
+#   output_vault_token    = true
+# }
 
 
 # // creates a security group in aws for vault access
