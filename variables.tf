@@ -114,3 +114,32 @@ variable "aws_tag_owner" {
   description = "Your email - This tag that will be appled to all AWS resources."
   type        = string
 }
+
+
+
+
+
+
+
+
+
+
+################################ TRANSIT GATEWAY TESTING
+
+variable "tgw_name" {
+  default = "hcp-tgw"
+}
+
+variable "hvn_vault_cidr_block" {
+  description = "CIDR block for the HVN Vault VPC"
+  type        = string
+  default     = "172.25.16.0/24"
+}
+
+variable "az" {
+  default = "us-west-2a"
+}
+
+variable "vpc_cidr" {
+  default = "10.0.1.0/24"
+}

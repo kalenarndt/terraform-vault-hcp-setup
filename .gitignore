@@ -39,4 +39,5 @@ secrets.tfvars
 # Ignores pre-commit hooks and editorconfig
 .editorconfig
 .pre-commit-config.yaml
+*.pem
 # End of https://www.toptal.com/developers/gitignore/api/terraform

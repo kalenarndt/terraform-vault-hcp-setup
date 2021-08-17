@@ -187,7 +187,7 @@ locals {
 resource "hcp_hvn_route" "hvn_tgw_route" {
   count = var.transit_gw ? 1 : 0
 
-  hvn_link         = hcp_hvn.hcp_hvn[0].self_link
+  hvn_link         = hcp_hvn.hcp_vault_hvn[0].self_link
   hvn_route_id     = var.hvn_route_id
   destination_cidr = var.vpc_cidr
   target_link      = hcp_aws_transit_gateway_attachment.hvn_transit_gw[0].self_link
@@ -213,14 +213,14 @@ resource "aws_ram_principal_association" "hcp_aws_ram" {
   count = var.transit_gw ? 1 : 0
 
   resource_share_arn = var.resource_share_arn
-  principal          = hcp_hvn.hcp_hvn[0].provider_account_id
+  principal          = hcp_hvn.hcp_vault_hvn[0].provider_account_id
 }
 
 // creates an attachment to the aws transit gateway from hvn
 resource "hcp_aws_transit_gateway_attachment" "hvn_transit_gw" {
   count = var.transit_gw ? 1 : 0
 
-  hvn_id                        = hcp_hvn.hcp_hvn[0].hvn_id
+  hvn_id                        = hcp_hvn.hcp_vault_hvn[0].hvn_id
   transit_gateway_attachment_id = var.transit_gw_attachment_id
   transit_gateway_id            = var.transit_gw_id
   resource_share_arn            = var.resource_share_arn
