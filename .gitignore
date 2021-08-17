@@ -40,4 +40,5 @@ secrets.tfvars
 .editorconfig
 .pre-commit-config.yaml
 *.pem
+creds.json
 # End of https://www.toptal.com/developers/gitignore/api/terraform

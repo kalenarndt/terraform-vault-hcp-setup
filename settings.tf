@@ -14,3 +14,9 @@ provider "hcp" {
   client_id     = var.hcp_client_id
   client_secret = var.hcp_client_secret
 }
+
+# provider "google" {
+#   project = var.project
+#   region = var.gcp_region
+#   credentials = file("creds.json")
+# }

@@ -9,5 +9,9 @@ terraform {
       source  = "hashicorp/hcp"
       version = "~>0.10.0"
     }
+    google = {
+      source  = "hashicorp/google"
+      version = "3.80.0"
+    }
   }
 }

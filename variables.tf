@@ -115,15 +115,6 @@ variable "aws_tag_owner" {
   type        = string
 }
 
-
-
-
-
-
-
-
-
-
 ################################ TRANSIT GATEWAY TESTING
 
 variable "tgw_name" {
@@ -138,8 +129,4 @@ variable "hvn_vault_cidr_block" {
 
 variable "az" {
   default = "us-west-2a"
-}
-
-variable "vpc_cidr" {
-  default = "10.0.1.0/24"
 }
